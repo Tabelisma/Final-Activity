@@ -14,15 +14,13 @@
                     <h1 class="h2"><i class="fa fa-dashboard"></i> Dashboard</h1>
                 </div>
                 <div class="card">
-                <h5 class="card-header">Summary</h5>
+                <h5 class="card-header">Total Products Sold: </h5>
                     <div class="card-body">
-                        <h5 class="card-title">Total Products Sold</h5>
-                        <p class="card-text">5000</p>
+                        <h5 class="card-title"><?php echo isset($_SESSION['totalsold'])? number_format($_SESSION['totalsold']): '0' ?></h5>
                     </div>
                 </div>
             </main>
         </div>
     </div>
 <?php require_once("footer.php")?>
-
 

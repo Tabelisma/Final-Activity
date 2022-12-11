@@ -22,7 +22,6 @@
             print_r($_SESSION['cartItems']);
             if($_POST['radSize'] == $_SESSION['cartItems'][$key]['size'] && $_GET['pid'] == $_SESSION['cartItems'][$key]['id']){
                 $isDuplicate = true;
-                // I forgot change $CarCount into $key
                 $_SESSION['cartItems'][$key]['qty'] = $_POST['inputQTY'];
                 break;
             }

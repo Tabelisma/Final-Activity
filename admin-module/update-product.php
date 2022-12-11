@@ -18,8 +18,7 @@
         $photo1 = "";
         $photo2 = "";
         $arrError = [];
-
-        // File 
+ 
         $arrAllowFiles = ['jpeg', 'jpg', 'png'];
         $uploadDIR = '../img/';
 
@@ -35,10 +34,10 @@
             $fileType2 = $_FILES['filePhoto2']['type'];
 
 
-            $fileExtTemp1 = explode('.', $fileName1); // this become the array
+            $fileExtTemp1 = explode('.', $fileName1); //array
             $fileExt1 = strtolower(end($fileExtTemp1)); 
             
-            $fileExtTemp2 = explode('.', $fileName2); // this become the array
+            $fileExtTemp2 = explode('.', $fileName2); //array
             $fileExt2 = strtolower(end($fileExtTemp2)); 
 
 
@@ -74,8 +73,6 @@
         if(empty($product_price))
             $arrError[] = "Photo 1 Address is Required";            
 
-                // Next time tuloy mo yun arrError printing
-
         if(empty($arrError)){
             $con = openConnection();      
             $strSQL = "
@@ -91,7 +88,7 @@
                 unset($_SESSION['k']);
                 $_SESSION['successUpdate'] = true;
                 header("location: products.php");
-                // mysqli_free_result();
+
             }
 
             else{

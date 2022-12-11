@@ -9,11 +9,10 @@
 ?>
 <?php require("header.php");?>
         <div class="row">
-            <!-- Products -->
             <?php
                 foreach($arrRecProducts as $key => $valueItem):
             ?>
-                    <div class="col-md-3 col-sm-6">
+                    <div class="col-md-5 col-sm-6">
                         <div class="product-grid2 card mb-5">
                             <div class="product-image2">
                                 <a name="btnDetails" href="./detail.php?pid=<?php echo $valueItem['id'];?>">

@@ -24,7 +24,7 @@
 
     if(isset($_POST['btnRemove'])){
         unset($_SESSION['cartItems'][$cartNo]);
-        $_SESSION['cartCount'] -= 1; // I forgot to put this for subration of cart count every removed an item
+        $_SESSION['cartCount'] -= 1;
         header("Location: cart.php");
     }
     else if (isset($_POST['btnCancel']))

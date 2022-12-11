@@ -25,12 +25,12 @@
                 <a href="cart.php" class="btn btn-primary btn-sm mt-1">
                     <i class="fa-solid fa-cart-shopping"></i>
                     Cart <span class="badge badge-light"><?php echo isset($_SESSION['cartItems'])? count($_SESSION['cartItems']): '0' ?></span>
-                    <span class="sr-only">unread messages</span>
+                    <span class="sr-only">Unread messages</span>
                 </a>
             </div>
         </div>
         <hr>
-        <h5>Product Successfully Added to the Cart, what do you want do next?</h5>
+        <h5>Product Successfully Added to the Cart, What do you want do next?</h5>
         <div class="my-3">
             <a href="cart.php" class="btn btn-dark">
                 <i class="fa-solid fa-cart-shopping"></i>

@@ -4,13 +4,13 @@
     if(isset($_POST['btnLogin'])){
         $con = openConnection();
 
-        $username = htmlspecialchars( $_POST['txtUsername']); // anti xss
+        $username = htmlspecialchars( $_POST['txtUsername']);
         $password = htmlspecialchars( $_POST['txtPassword']);
 
-        $username = stripslashes($username);    // removal of single quotes, slash specifically
+        $username = stripslashes($username);
         $password = stripslashes($password);
 
-        $username = mysqli_real_escape_string($con, $username); //escaping any attempts for SQL Injection
+        $username = mysqli_real_escape_string($con, $username);
         $password = mysqli_real_escape_string($con, $password);
         
         $password = md5($password); // hash the password
@@ -40,7 +40,7 @@
                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                <span aria-hidden="true">&times;</span>
                </button>
-             </div>
+               </div>
                
                
                ';
