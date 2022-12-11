@@ -16,45 +16,51 @@
 
         // File 
         $arrAllowFiles = ['jpeg', 'jpg', 'png'];
-        $uploadDIR = 'img/';
+        $uploadDIR = '../img/';
 
-        if(isset($_FILES['filePhoto1'])){
-            $arrErrorFile1 =  [];
+        if(isset($_FILES['filePhoto1']) && isset($_FILES['filePhoto2'])){
             $fileName1 = $_FILES['filePhoto1']['name'];
             $fileSize1 = $_FILES['filePhoto1']['size'];
             $fileTemp1 = $_FILES['filePhoto1']['tmp_name'];
             $fileType1 = $_FILES['filePhoto1']['type'];
 
-            $fileExtTemp1 = explode('.', $fileName); // thi become the array
-            $fileExt1 = strtolower(end($fileExtTemp)); 
-
-            if(in_array($fileExt1, $arrAllowFiles) === false){
-                $arrErrorFile1[] = "Photo 1: Extension File is not allowed, You can only choose a JPG or PNG file"; 
-            }
-            if(empty($arrErrorFile1)){
-                $photo1 = $fileName1;
-                move_uploaded_file($fileTemp1, $uploadDIR , $fileName1);
-            }
-
-        }
-        if(isset($_FILES['filePhoto2'])){
-            $arrErrorFile2 = [];
             $fileName2 = $_FILES['filePhoto2']['name'];
             $fileSize2 = $_FILES['filePhoto2']['size'];
             $fileTemp2 = $_FILES['filePhoto2']['tmp_name'];
             $fileType2 = $_FILES['filePhoto2']['type'];
 
-            $fileExtTemp2 = explode('.', $fileName); // this become the array
-            $fileExt2 = strtolower(end($fileExtTemp)); 
+            $fileExtTemp1 = explode('.', $fileName1); // thi become the array
+            $fileExt1 = strtolower(end($fileExtTemp1)); 
 
-            if(in_array($fileExt2, $arrAllowFiles) === false){
-                $arrErrorFile2[] = "Photo 2: Extension File is not allowed, You can only choose a JPG or PNG file"; 
+            $fileExtTemp2 = explode('.', $fileName2); // this become the array
+            $fileExt2 = strtolower(end($fileExtTemp2)); 
+
+            if(in_array($fileExt1, $arrAllowFiles) == false)
+                $arrError[] = "Photo 1: Extension File is not allowed, You can only choose a JPG or PNG file"; 
+
+            if(in_array($fileExt2, $arrAllowFiles) == false)
+                $arrError[] = "Photo 2: Extension File is not allowed, You can only choose a JPG or PNG file"; 
+
+            if($fileSize1 > 5000000)
+                $arrError[] = "Photo 1 should be 5MB Maximuim";
+                
+            if($fileSize2 > 5000000)
+                $arrError[] = "Photo 2 size should be 5MB Maximuim";
+
+            if(empty($arrError)){
+                $photo1 = sanitizeInputs($con, $fileName1);;
+                move_uploaded_file($fileTemp1, $uploadDIR . $fileName1);
+                $photo2 = sanitizeInputs($con, $fileName2);
+                move_uploaded_file($fileTemp2, $uploadDIR . $fileName2);
             }
-            if(empty($arrErrorFile2)){
-                $photo2 = $fileName2;
-                move_uploaded_file($fileTemp2, $uploadDIR , $fileName2);
+            else{
+                $arrError[] = "Something Wrong sending files";
             }
         }
+        else{
+            $arrError[] = "2 Photos File are Required";
+        }
+
 
         if(empty($product_name))
             $arrError[] = "PRoduct Name is Required";
@@ -65,13 +71,6 @@
         if(empty($product_price))
             $arrError[] = "Product Price is Required";            
         
-        if(empty($photo1))
-            $arrError[] = "Photo 1 File is Required";
-
-        if(empty($photo2))
-            $arrError[] = "Photo 2 File is Required";
-    
-
         if(empty($arrError)){
             // Inserting Multiple Rows
             $strSQL = "
@@ -80,19 +79,14 @@
                 (name, description, price, photo1, photo2)
                 VALUES 
                 ('$product_name', '$product_description', $product_price, '$photo1', '$photo2')
-        
             ";
-        
             if(mysqli_query($con, $strSQL))
                 header("location: product-added.php");
             else
                 $arrError[] = 'Error: Failed SQL';
         
-           
         }
-  
         closeConnections($con);
-
     }
     // print_r($arrError);
 ?>
@@ -104,7 +98,7 @@
                     <h1 class="h2"><i class="fa fa-shop"></i> Add Products</h1>
                 </div>
 
-                <form method="post">
+                <form method="post" enctype="multipart/form-data">
                     <div class="form-row">
                         <div class="form-group col-12">
                             <label for="txtProductName">Name <span class="text-danger">*</span></label>
@@ -198,9 +192,6 @@
 
                                     }
                                 }
-                                else{
-
-                                }
                             ?>
                                
                             </tbody>
@@ -211,6 +202,3 @@
         </div>
     </div>
 <?php require_once("footer.php")?>
-
-
-
